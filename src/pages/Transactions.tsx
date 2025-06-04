@@ -32,6 +32,18 @@ interface Transaction {
   type: string;
 }
 
+interface TransactionResponse {
+  id: number;
+  title: string;
+  accountId: number;
+  accountName: string;
+  categoryId: number;
+  categoryName: string;
+  amount: number;
+  date: string;
+  type: string;
+}
+
 interface Account {
   id: number;
   name: string;
@@ -45,7 +57,7 @@ interface Category {
 
 const Transactions: React.FC = () => {
   const { toast } = useToast();
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<TransactionResponse[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [open, setOpen] = useState(false);
@@ -129,8 +141,8 @@ const Transactions: React.FC = () => {
               <TableCell>Amount</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Type</TableCell>
-              <TableCell>Account ID</TableCell>
-              <TableCell>Category ID</TableCell>
+              <TableCell>Account Name</TableCell>
+              <TableCell>Category Name</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -141,8 +153,8 @@ const Transactions: React.FC = () => {
                 <TableCell>{tx.amount}</TableCell>
                 <TableCell>{new Date(tx.date).toLocaleDateString()}</TableCell>
                 <TableCell>{tx.type}</TableCell>
-                <TableCell>{tx.accountId}</TableCell>
-                <TableCell>{tx.categoryId}</TableCell>
+                <TableCell>{tx.accountName}</TableCell>
+                <TableCell>{tx.categoryName}</TableCell>
                 <TableCell>
                   <IconButton onClick={() => handleDelete(tx.id)} color="error">
                     <DeleteIcon />
