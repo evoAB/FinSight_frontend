@@ -25,6 +25,9 @@ const Navbar: React.FC = () => {
           <Button color="inherit" component={Link} to="/dashboard">
             Dashboard
           </Button>
+          <Button color="inherit" component={Link} to="/accounts">
+            Accounts
+          </Button>
           <Button color="inherit" component={Link} to="/transactions">
             Transactions
           </Button>
