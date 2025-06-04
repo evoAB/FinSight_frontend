@@ -6,8 +6,7 @@ import { useToast } from "../context/ToastContext";
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-
-  const token = localStorage.getItem("token");
+  const isLoggedIn = !!localStorage.getItem("token");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -22,7 +21,7 @@ const Navbar: React.FC = () => {
           FinSight
         </Typography>
         <Box display="flex" gap={2}>
-          <Button color="inherit" component={Link} to="/dashboard">
+          <Button color="inherit" component={Link} to="/">
             Dashboard
           </Button>
           <Button color="inherit" component={Link} to="/accounts">
@@ -34,9 +33,15 @@ const Navbar: React.FC = () => {
           <Button color="inherit" component={Link} to="/categories">
             Categories
           </Button>
+          {isLoggedIn ? (
           <Button color="inherit" onClick={handleLogout}>
-            {token ? "Login" : "Logout"}
+            Logout
           </Button>
+        ) : (
+          <Button color="inherit" component={Link} to="/login">
+            Admin Login
+          </Button>
+        )}
         </Box>
       </Toolbar>
     </AppBar>

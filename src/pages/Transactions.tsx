@@ -24,6 +24,7 @@ import { jwtDecode } from "jwt-decode";
 
 interface Transaction {
   id: number;
+  title: string;
   accountId: number;
   categoryId: number;
   amount: number;
@@ -50,6 +51,7 @@ const Transactions: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<Omit<Transaction, "id">>({
     accountId: 0,
+    title: "",
     categoryId: 0,
     amount: 0,
     date: new Date().toISOString().slice(0, 10),
@@ -114,7 +116,7 @@ const Transactions: React.FC = () => {
       {isAdmin && (
         <Box mb={2}>
           <Button variant="contained" onClick={() => setOpen(true)}>
-            {"Add Category"}
+            {"Add Transaction"}
           </Button>
         </Box>
       )}
@@ -123,6 +125,7 @@ const Transactions: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>Title</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Type</TableCell>
@@ -134,6 +137,7 @@ const Transactions: React.FC = () => {
           <TableBody>
             {transactions.map((tx) => (
               <TableRow key={tx.id}>
+                <TableCell>{tx.title}</TableCell>
                 <TableCell>{tx.amount}</TableCell>
                 <TableCell>{new Date(tx.date).toLocaleDateString()}</TableCell>
                 <TableCell>{tx.type}</TableCell>
@@ -155,11 +159,22 @@ const Transactions: React.FC = () => {
         <DialogContent>
           <TextField
             margin="normal"
+            label="Title"
+            fullWidth
+            value={form.title}
+            onChange={(e) =>
+              setForm({ ...form, title: e.target.value })
+            }
+          />
+          <TextField
+            margin="normal"
             label="Amount"
             fullWidth
             type="number"
             value={form.amount}
-            onChange={(e) => setForm({ ...form, amount: +e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, amount: parseFloat(e.target.value) })
+            }
           />
           <TextField
             margin="normal"
